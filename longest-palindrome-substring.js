@@ -13,18 +13,22 @@ var longestPalindrome = function(s) {
   let charInit = 0;
   let charFin = 0;
   let i = 0;
+  let testingSubString = '';
   let reverseSubString = '';
-  for (j = i; j < s.length; j++) {
-    let testingString = s.substring(i, j + 1);
+  while (j < s.length) {
+    testingSubString += s.charAt(j);
     reverseSubString = s.charAt(j) + reverseSubString;
-    if(testingString == reverseSubString && testingString.length > (charFin + 1 - charInit)) {
+    if(testingSubString == reverseSubString && testingSubString.length > (charFin + 1 - charInit)) {
       charInit = i;
       charFin = j;
     }
     if (j == s.length - 1) {
       reverseSubString = '';
+      testingSubString = '';
       i++;
       j = i - 1;
+    } else {
+      j++;
     }
   }
   return s.substring(charInit, charFin + 1);
@@ -77,7 +81,7 @@ var longestPalindrome = function(s) {
     }
     return right - left - 1;
   };
-  
+
   for (let i = 0; i < s.length; i++) {
     const len1 = expandAroundCenter(i, i); // Odd length palindromes
     const len2 = expandAroundCenter(i, i + 1); // Even length palindromes
