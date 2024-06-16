@@ -7,7 +7,8 @@
 var myAtoi = function(s) {
   // Match that there is a number in the string
   if (!(/.*\d.*/).test(s)) return 0;
-  const string = s.replace(/^\s+/, '');
+  // const string = s.replace(/^\s+/, '');
+  const string = s.trim();
 
   let sign = 0, result = '0', i = 0;
   while (i < string.length) {
