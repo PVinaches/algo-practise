@@ -39,6 +39,31 @@ var intToRoman = function(num) {
   return result;
 };
 
+var intToRomanShort = function(num) {
+  if (num < 1 || num > 3999) {
+    return '';
+  }
+
+  const romansDic = [
+    ['M', 1000], ['CM', 900], ['D', 500], ['CD', 400],
+    ['C', 100], ['XC', 90], ['L', 50], ['XL', 40],
+    ['X', 10], ['IX', 9], ['V', 5], ['IV', 4],
+    ['I', 1]
+  ];
+
+  let result = '';
+  
+  for (const [roman, value] of romansDic) {
+    while (num >= value) {
+      result += roman;
+      num -= value;
+    }
+  }
+  
+  return result;
+};
+
+
 // Testing
 const num1 = 3749;
 const num2 = 58;
