@@ -4,46 +4,41 @@
  * @return {string[]}
  */
 var letterCombinations = function(digits) {
-  if (digits.length == 0) return [];
-
-  const letterCombinations = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i'], ['j', 'k', 'l'], ['m', 'n', 'o'], 
-  ['p', 'q', 'r', 's'], ['t', 'u', 'v'], ['w', 'x', 'y', 'z']];
+  /**
+   * @param {string} digits
+   * @param {string[]} result
+   * @param {number} round
+   * @param {round} times
+   * @return {string[]}
+   */
+  function getResult(digits, result, round, times) {
+    if (round == times) return result;
+    const letterCombinations = [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i'], ['j', 'k', 'l'], ['m', 'n', 'o'], 
+    ['p', 'q', 'r', 's'], ['t', 'u', 'v'], ['w', 'x', 'y', 'z']];
   
-  if (digits.length == 1) return letterCombinations[parseInt(digits) - 2];
-
-  let result = [];
-  const digit1 = letterCombinations[parseInt(digits.charAt(0)) - 2];
-  const digit2 = letterCombinations[parseInt(digits.charAt(1)) - 2];
-  for (i = 0; i < digit1.length; i++) {
-    for (j = 0; j < digit2.length; j++) {
-      result.push(digit1[i] + digit2[j]);
-    }
-  }
-
-  if (digits.length == 2) return result;
-
-  const times = digits.length - 2;
-  const digit3 = letterCombinations[parseInt(digits.charAt(2)) - 2];
-  let digit4 = undefined ;
-  if (digits.length == 4) {
-    digit4 = letterCombinations[parseInt(digits.charAt(3)) - 2];
-  }
-
-  let round = 0;
-  while (round < times) {
+    const digit = parseInt(digits.charAt(round)) - 2;
+    const letters = letterCombinations[digit];
     let iterDigits = result;
     result = [];
-
-    for (i = 0; i < iterDigits.length; i++) {
-      for (j = 0; j < (round == 0 ? digit3.length : digit4.length); j++) {
-        result.push(iterDigits[i] + (round == 0 ? digit3[j] : digit4[j]));
+  
+    for (j = 0; j < letters.length; j++) {
+      if (iterDigits.length > 0) {
+        for (i = 0; i < iterDigits.length; i++) {
+          result.push(iterDigits[i] + letters[j]);
+        }
+      } else {
+        result.push(letters[j]);
       }
     }
-
-    round++;
+    round++;  
+    return getResult(digits, result, round, times);
   }
+
+  if (digits.length == 0) return [];
   
-  return result;
+  const result = [], round = 0, times = digits.length;
+
+  return getResult(digits, result, round, times);
 };
 
 // Testing
@@ -56,5 +51,5 @@ const digits3 = "2";
 const digits4 = "234";
 const digits5 = "2345";
 
-const digits = digits5;
+const digits = digits3;
 console.log(letterCombinations(digits));
