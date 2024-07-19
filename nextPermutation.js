@@ -57,20 +57,15 @@ var nextPermutation = function(nums) {
   }
 
   // Middle inflexion index
-  for (let i = nums.length - 1 ; i > inflexionIndex - 1; i--) {
-    if (nums[i] > nums[inflexionIndex - 1]) {
-      swap(nums, i, inflexionIndex - 1);
-      sort(nums, inflexionIndex, nums.length - 1);
-      return;
+  let changingPos = -1, pivot = inflexionIndex - 1;
+  for (let i = nums.length - 1 ; i > pivot; i--) {
+    if (nums[i] > nums[pivot]) {
+      changingPos = i;
+      break;
     }
   }
-
-  // If sorted increasing -> swap indexes 1 and 2
-  if (inflexionIndex == nums.length - 1) {
-    swap(nums, 1, 2);
-    return;
-  }
-
+  swap(nums, changingPos, pivot);
+  sort(nums, inflexionIndex, nums.length - 1);
   return;
 };
 
@@ -80,6 +75,7 @@ const nums2 = [3,2,1];
 const nums3 = [1,1,5];
 const nums4 = [2,3,1,4];
 const nums5 = [1,2,5,4];
+const nums6 = [1,2,3,4];
 
-const nums =  nums5;
+const nums =  nums6;
 console.log(nextPermutation(nums));
