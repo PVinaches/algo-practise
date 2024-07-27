@@ -1,0 +1,47 @@
+// Functions
+var orderLetters = function(word) {
+  return letters = word.split('').sort().toString();
+}
+
+var compareWords = function(a, b) {
+  return a == b;
+}
+
+/**
+* @param {string[]} strs
+* @return {string[][]}
+*/
+var groupAnagrams = function(strs) {
+  if (strs.length == 0) return [];
+  if (strs.length == 1) return [strs];
+
+  const wordsAllOrdered = []
+  for (let i = 0; i < strs.length; i++) {
+    wordsAllOrdered.push(orderLetters(strs[i]));
+  }
+  
+  const anagrams = [];
+  for (let i = 0; i < wordsAllOrdered.length; i++) {
+    if (wordsAllOrdered[i] == undefined) continue;
+    const anagramList = [];
+    anagramList.push(strs[i]);
+    for (let j = i + 1; j < wordsAllOrdered.length; j++) {
+      if (wordsAllOrdered[j] == undefined) continue;
+      if (wordsAllOrdered[i].length == wordsAllOrdered[j].length) {
+        const isAnagram = compareWords(wordsAllOrdered[i], wordsAllOrdered[j]);
+        if (isAnagram) {
+          anagramList.push(strs[j]);
+          wordsAllOrdered[j] = undefined;
+        }
+      }
+    }
+    wordsAllOrdered[i] = undefined;
+    anagrams.push(anagramList);
+  }
+  return anagrams;
+};
+
+// Testing
+const strs1 = ["eat","tea","tan","ate","nat","bat"];
+const strs = ["",""]
+console.log(groupAnagrams(strs1));
